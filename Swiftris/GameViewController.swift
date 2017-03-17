@@ -53,9 +53,23 @@ import SpriteKit
         return true
     }
     
+   
+    
     @IBAction func didTap(sender: UITapGestureRecognizer) {
         swiftris.rotateShape()
     }
+
+    
+    
+    @IBAction func didSwipe(sender: UISwipeGestureRecognizer) {
+        
+        swiftris.dropShape()
+    }
+   
+    
+    
+   
+    
     @IBAction func didPan(sender: UIPanGestureRecognizer) {
         
         //recover a point which defines the translation of the gesture relative to where it began
@@ -65,6 +79,7 @@ import SpriteKit
             //check whether the x translation has crossed our threshold - 90% of BlockSize
             if abs(currentPoint.x - originalPoint.x) > (BlockSize * 0.9) {
                 //if it has, check the velocity of the gesture. Velocity will give us direction (positive velocity represents movement to the right, negetive toward the left). We then move the shape in the corresponding direction and reset reference point
+                
                 if sender.velocityInView(self.view).x > CGFloat(0) {
                     swiftris.moveShapeRight()
                     panPointReference = currentPoint
@@ -77,28 +92,12 @@ import SpriteKit
             panPointReference = currentPoint
         }
     }
-    @IBAction func didSwipe(sender: UISwipeGestureRecognizer) {
-        swiftris.dropShape()
-    }
+    
+    
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        
-        if gestureRecognizer is UISwipeGestureRecognizer {
-            if otherGestureRecognizer is UIPanGestureRecognizer {
-                return true
-            }
-        } else if gestureRecognizer is UIPanGestureRecognizer {
-            if otherGestureRecognizer is UITapGestureRecognizer {
-                return true
-            }
-        }
-        
-        return false
-        
-    }
     
     func didTick() {
         swiftris.letShapeFall()

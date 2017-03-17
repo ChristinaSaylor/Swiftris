@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F2109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
@@ -63,7 +63,9 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="LPV-RM-JTf" appends="YES" id="eS0-Po-zVP"/>
+                            <outletCollection property="gestureRecognizers" destination="2tA-Ak-yRl" appends="YES" id="hRX-pf-L5e"/>
+                            <outletCollection property="gestureRecognizers" destination="AWc-dw-HlY" appends="YES" id="wZ7-LU-Nm6"/>
+                            <outletCollection property="gestureRecognizers" destination="Lfs-Cd-9qI" appends="YES" id="IpG-R5-LhE"/>
                         </connections>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
@@ -74,24 +76,24 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="LPV-RM-JTf">
+                <tapGestureRecognizer id="2tA-Ak-yRl">
                     <connections>
-                        <action selector="didTap:" destination="BV1-FR-VrT" id="X3b-kl-NhO"/>
-                        <outlet property="delegate" destination="BV1-FR-VrT" id="azF-TS-Xha"/>
+                        <action selector="didTap:" destination="BV1-FR-VrT" id="9kN-of-f1e"/>
+                        <outlet property="delegate" destination="BV1-FR-VrT" id="dSD-xD-NcH"/>
                     </connections>
                 </tapGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="czG-WD-paO">
+                <swipeGestureRecognizer direction="right" id="AWc-dw-HlY">
                     <connections>
-                        <action selector="didPan:" destination="BV1-FR-VrT" id="ECA-mM-rb8"/>
-                        <outlet property="delegate" destination="BV1-FR-VrT" id="UxH-Fi-Atd"/>
-                    </connections>
-                </panGestureRecognizer>
-                <swipeGestureRecognizer direction="down" id="hND-JV-vL9">
-                    <connections>
-                        <action selector="didSwipe:" destination="BV1-FR-VrT" id="i0E-pM-EUm"/>
-                        <outlet property="delegate" destination="BV1-FR-VrT" id="iIi-Fy-EjO"/>
+                        <action selector="didSwipe:" destination="BV1-FR-VrT" id="iGu-iZ-eSs"/>
+                        <outlet property="delegate" destination="BV1-FR-VrT" id="AMw-E1-vAo"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Lfs-Cd-9qI">
+                    <connections>
+                        <action selector="didPan:" destination="BV1-FR-VrT" id="uRl-OZ-bZg"/>
+                        <outlet property="delegate" destination="BV1-FR-VrT" id="b6E-UW-Y4W"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
         </scene>
     </scenes>
