@@ -97,6 +97,20 @@ import SpriteKit
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+  
+  //verifies is user if swiping or panning. if swipe doesn't pan
+  func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+         if gestureRecognizer is UISwipeGestureRecognizer {
+             if otherGestureRecognizer is UIPanGestureRecognizer {
+                 return true
+             }
+         } else if gestureRecognizer is UIPanGestureRecognizer {
+             if otherGestureRecognizer is UITapGestureRecognizer {
+                 return true
+             }
+         }
+         return false
+     }
     
     
     func didTick() {
