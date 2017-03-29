@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import AVFoundation
 import SpriteKit
 
  class GameViewController: UIViewController, SwiftrisDelegate, UIGestureRecognizerDelegate {
     
     var scene: GameScene!
     var swiftris:Swiftris!
+    //creates audioplayer - AJ
+    var theme = AVAudioPlayer()
+    
+    
+    var gamePaused = false
+    var gameMuted = false
     
     //keeps track of the last point on the screen at which a shape movement occurred or where a pan begins
     var panPointReference:CGPoint?
@@ -20,6 +27,19 @@ import SpriteKit
     @IBOutlet weak var scoreLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let themeSound = NSBundle.mainBundle().pathForResource("Sounds/theme.mp3", ofType: nil)
+        
+        do {
+            theme = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: themeSound!))
+        }
+        catch {
+            print("Something bad happened. Try catching specific errors to narrow things down")
+        }
+        
+        theme.prepareToPlay()
+        theme.play()
         
         //Configure the view
         let skView = view as! SKView
@@ -38,6 +58,7 @@ import SpriteKit
         
         swiftris = Swiftris()
         swiftris.delegate = self
+        UIUnmuteButton.hidden = true
         
         
         //Present the scene
@@ -56,14 +77,17 @@ import SpriteKit
    
     
     @IBAction func didTap(sender: UITapGestureRecognizer) {
-        swiftris.rotateShape()
+        if(!gamePaused){
+            swiftris.rotateShape()
+        }
     }
 
     
     
     @IBAction func didSwipe(sender: UISwipeGestureRecognizer) {
-        
-        swiftris.dropShape()
+        if(!gamePaused){
+            swiftris.dropShape()
+        }
     }
    
     
@@ -71,44 +95,117 @@ import SpriteKit
     @IBAction func didRestart(sender: UIButton) {
         //explodes blocks currently in game
         swiftris.removeBlocks()
+        if(UIPauseButton.hidden)
+        {
+            UIPauseButton.hidden = false
+            UIPlayButton.hidden = true
+            gamePaused = false
+        }
+        
         
         //Tells swiftris to restart the game
-        swiftris.restartGame()
+        swiftris.restartGame(true)
     }
     
+    
+    //Button Outlets
     @IBOutlet var UIMainMenu: UIView!
     
     @IBOutlet var UIstartButton: UIButton!
     
+    @IBOutlet var UIPlayButton: UIButton!
     
+    @IBOutlet var UIPauseButton: UIButton!
+    
+    @IBOutlet var UIMuteMusicButton: UIButton!
+    
+    @IBOutlet var UIUnmuteButton: UIButton!
+    
+    
+    
+    @IBAction func Back(sender: UIButton) {
+        swiftris.removeBlocks()
+        swiftris.mainmenu()
+    }
+    
+    
+    func gamedidMainMenu(swiftris: Swiftris)
+    { scene.animateCollapsingLines(swiftris.removeAllBlocks(), fallenBlocks: swiftris.removeAllBlocks()){
+        swiftris.endGame()
+        }
+    }
    //start button starts the game but can't start the game after it has been hidden once before
     @IBAction func startGame(sender: UIButton) {
         UIstartButton.hidden = true
         UIMainMenu.hidden = true
+        UIPlayButton.hidden = true
+        UIPauseButton.hidden = false
+        gamePaused = false
         swiftris.beginGame()
     }
     
+    @IBAction func pauseGame(sender: UIButton) {
+        UIPauseButton.hidden = true
+        UIPlayButton.hidden = false
+        gamePaused = true
+        scene.stopTicking()
+        theme.pause()
+    }
+    
+    
+    //pause audio player and set gameMute to true - AJ
+    @IBAction func muteMusic(sender: UIButton) {
+        
+        gameMuted = true
+        theme.pause()
+        UIUnmuteButton.hidden = false
+        UIMuteMusicButton.hidden = true
+        
+        
+    }
+    
+    
+    @IBAction func unMute(sender: UIButton) {
+        
+        gameMuted = false
+        theme.play()
+        UIUnmuteButton.hidden = true
+        UIMuteMusicButton.hidden = false
+    }
+    
+    
+    
+    @IBAction func playButton(sender: UIButton) {
+        UIPlayButton.hidden = true
+        UIPauseButton.hidden = false
+        gamePaused = false
+        scene.startTicking()
+        theme.play()
+    }
     
     @IBAction func didPan(sender: UIPanGestureRecognizer) {
-        
+        //Placed Pan gesture into if structure so player can't move things if game is paused - justin
+        if (!gamePaused)
+            {
         //recover a point which defines the translation of the gesture relative to where it began
-        let currentPoint = sender.translationInView(self.view)
+                let currentPoint = sender.translationInView(self.view)
         
-        if let originalPoint = panPointReference {
+                if let originalPoint = panPointReference {
             //check whether the x translation has crossed our threshold - 90% of BlockSize
-            if abs(currentPoint.x - originalPoint.x) > (BlockSize * 0.9) {
+                if abs(currentPoint.x - originalPoint.x) > (BlockSize * 0.9) {
                 //if it has, check the velocity of the gesture. Velocity will give us direction (positive velocity represents movement to the right, negetive toward the left). We then move the shape in the corresponding direction and reset reference point
                 
-                if sender.velocityInView(self.view).x > CGFloat(0) {
-                    swiftris.moveShapeRight()
-                    panPointReference = currentPoint
-                } else {
-                    swiftris.moveShapeLeft()
-                    panPointReference = currentPoint
+                    if sender.velocityInView(self.view).x > CGFloat(0) {
+                        swiftris.moveShapeRight()
+                        panPointReference = currentPoint
+                    } else {
+                        swiftris.moveShapeLeft()
+                        panPointReference = currentPoint
+                    }
                 }
-            }
-        } else if sender.state == .Began {
-            panPointReference = currentPoint
+            } else if sender.state == .Began {
+                panPointReference = currentPoint
+                }
         }
     }
     
@@ -160,6 +257,11 @@ import SpriteKit
         scoreLabel.text = "\(swiftris.score)"
         scene.tickLengthMillis = TickLengthLevelOne
         
+        if(!gameMuted)
+        {
+            theme.play()
+        }
+        
         if swiftris.nextShape != nil && swiftris.nextShape!.blocks[0].sprite == nil {
             scene.addPreviewShapeToScene(swiftris.nextShape!) {
                 self.nextShape()
@@ -177,12 +279,18 @@ import SpriteKit
         view.userInteractionEnabled = true
         scene.stopTicking()
         
-        scene.playSound("Sounds/gameover.mp3")
+        
+        if(!gameMuted)
+        {
+            scene.playSound("Sounds/gameover.mp3")
+        }
+        
         
         scene.animateCollapsingLines(swiftris.removeAllBlocks(), fallenBlocks: swiftris.removeAllBlocks()){}
         
         UIMainMenu.hidden = false
         UIstartButton.hidden = false
+        gamePaused = true
         
         //set label to highscore - AJ
         UIhighscore.text = String(userDefaults.integerForKey("highscore"))
@@ -196,7 +304,10 @@ import SpriteKit
     func gameDidRestart(swiftris: Swiftris){
         scene.stopTicking()
         
-        scene.playSound("Sounds/gameover.mp3")
+        if(!gameMuted)
+        {
+            scene.playSound("Sounds/gameover.mp3")
+        }
         
         scene.animateCollapsingLines(swiftris.removeAllBlocks(), fallenBlocks: swiftris.removeAllBlocks()){
             swiftris.beginGame()
@@ -213,7 +324,10 @@ import SpriteKit
             scene.tickLengthMillis -= 50
         }
         
-        scene.playSound("Sounds/levelup.mp3")
+        if(!gameMuted)
+        {
+            scene.playSound("Sounds/levelup.mp3")
+        }
         
     }
     
@@ -225,7 +339,10 @@ import SpriteKit
             swiftris.letShapeFall()
         }
         
-        scene.playSound("Sounds/drop.mp3")
+        if(!gameMuted)
+        {
+            scene.playSound("Sounds/drop.mp3")
+        }
         
     }
     
@@ -242,7 +359,10 @@ import SpriteKit
                 self.gameShapeDidLand(swiftris)
             }
             
-            scene.playSound("Sounds/bomb.mp3")
+            if(!gameMuted)
+            {
+                scene.playSound("Sounds/bomb.mp3")
+            }
         } else {
             nextShape()
         }

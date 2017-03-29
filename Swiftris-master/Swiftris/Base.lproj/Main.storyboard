@@ -17,15 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnh-eP-2F5">
-                                <rect key="frame" x="241" y="498" width="50" height="50"/>
-                                <state key="normal" image="restart">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didRestart:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Dn3-dt-D6s"/>
-                                </connections>
-                            </button>
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYI-79-1Dc" customClass="SKView">
                                 <rect key="frame" x="224" y="237" width="84" height="100"/>
                                 <subviews>
@@ -68,6 +59,43 @@
                                 </subviews>
                                 <gestureRecognizers/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnh-eP-2F5">
+                                <rect key="frame" x="241" y="497" width="50" height="51"/>
+                                <state key="normal" image="restart">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didRestart:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Dn3-dt-D6s"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hx4-ZC-ZTg">
+                                <rect key="frame" x="20" y="497" width="54" height="52"/>
+                                <state key="normal" image="player-pause"/>
+                                <connections>
+                                    <action selector="pauseGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="1Au-Nm-XwK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Br-EZ-Mwg">
+                                <rect key="frame" x="20" y="497" width="56" height="52"/>
+                                <state key="normal" image="buttonstart"/>
+                                <connections>
+                                    <action selector="playButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="fh2-8Q-x23"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWO-09-3vK">
+                                <rect key="frame" x="89" y="497" width="56" height="57"/>
+                                <state key="normal" title="Back Button" image="back button"/>
+                                <connections>
+                                    <action selector="Back:" destination="BV1-FR-VrT" eventType="touchUpInside" id="hjM-fa-eKy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0fL-jo-p2G">
+                                <rect key="frame" x="167" y="496" width="58" height="52"/>
+                                <state key="normal" title="Button" image="music "/>
+                                <connections>
+                                    <action selector="muteMusic:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yft-sP-mu7"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bUx-g8-3Uo">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
@@ -78,7 +106,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2S-FG-cNZ">
-                                        <rect key="frame" x="82" y="386" width="156" height="49"/>
+                                        <rect key="frame" x="82" y="391" width="156" height="49"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="34"/>
                                         <color key="textColor" red="0.11372549019607843" green="0.61960784313725492" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -111,6 +139,13 @@
                                     <action selector="startGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="5tO-0U-tPZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHv-h6-AWO">
+                                <rect key="frame" x="167" y="503" width="58" height="57"/>
+                                <state key="normal" title="Button" image="muted\"/>
+                                <connections>
+                                    <action selector="unMute:" destination="BV1-FR-VrT" eventType="touchUpInside" id="NBq-nX-8LQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -124,6 +159,10 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="UIMainMenu" destination="bUx-g8-3Uo" id="7JY-HI-ThO"/>
+                        <outlet property="UIMuteMusicButton" destination="0fL-jo-p2G" id="ISD-pG-ItU"/>
+                        <outlet property="UIPauseButton" destination="Hx4-ZC-ZTg" id="OOR-dB-FvX"/>
+                        <outlet property="UIPlayButton" destination="3Br-EZ-Mwg" id="2hF-xb-NeG"/>
+                        <outlet property="UIUnmuteButton" destination="pHv-h6-AWO" id="vAr-EO-0fT"/>
                         <outlet property="UIhighLevel" destination="0Cm-HI-S32" id="Q0x-aZ-qAy"/>
                         <outlet property="UIhighscore" destination="N2S-FG-cNZ" id="92x-VA-bGB"/>
                         <outlet property="UIstartButton" destination="Irc-nF-S4H" id="etT-0y-rqJ"/>
@@ -157,7 +196,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="246" y="285"/>
+            <point key="canvasLocation" x="246" y="295"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="FbW-fJ-U3l">
@@ -176,9 +215,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gkT-be-5yh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="jf4-pu-UFk">
+            <objects>
+                <viewController id="eYn-jE-isl" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OQJ-a3-oEq"/>
+                        <viewControllerLayoutGuide type="bottom" id="weF-ez-Sjq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7I7-gW-aPW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="21P-Ov-hGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Xbw-tG-9WK">
+            <objects>
+                <viewController id="H7F-7c-pPO" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CSq-wN-D3b"/>
+                        <viewControllerLayoutGuide type="bottom" id="g4P-rh-3vg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9gK-g0-e62">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7GN-bZ-IPa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
+        <image name="back button" width="225" height="225"/>
         <image name="buttonstart" width="512" height="512"/>
+        <image name="music " width="400" height="400"/>
+        <image name="muted\" width="256" height="256"/>
+        <image name="player-pause" width="128" height="128"/>
         <image name="restart" width="300" height="300"/>
         <image name="whitebg" width="84" height="100"/>
     </resources>

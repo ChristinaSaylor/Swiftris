@@ -21,7 +21,7 @@ let PreviewColumn = 12
 let PreviewRow = 1
 
 let PointsPerLine = 10
-let LevelThreshold = 20
+let LevelThreshold = 100
 
 //setup userDefaults to store scored- AJ
 let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -41,6 +41,9 @@ protocol SwiftrisDelegate {
     //invoked when the restart button is pressed - Justin
     func gameDidRestart(swiftris: Swiftris)
     
+    //invoked when the player hits back button
+    func gamedidMainMenu(swiftris: Swiftris)
+    
     //invoked when the falling shape has become part of the game board
     func gameShapeDidLand(swiftris:Swiftris)
     
@@ -52,6 +55,8 @@ protocol SwiftrisDelegate {
     
     //invoked when the game has reached a new level
     func gameDidLevelUp(swiftris:Swiftris)
+    
+    
 }
 
 class Swiftris {
@@ -94,6 +99,14 @@ class Swiftris {
         }
         
         return (fallingShape, nextShape)
+    }
+    
+    
+    func mainmenu()
+    {
+    
+    delegate?.gamedidMainMenu(self)
+    
     }
     
     //Checks both block boundary conditions
@@ -205,10 +218,17 @@ class Swiftris {
     }
     
     //Same as endGame but starts game back with the 'gameDidRestart' function
-    func restartGame(){
+    func restartGame(restart: Bool){
         score = 0
         level = 1
-        delegate?.gameDidRestart(self)
+        if(restart)
+        {
+            delegate?.gameDidRestart(self)
+        }
+        else
+        {
+            delegate?.gameDidEnd(self)
+        }
     }
     
     //returns two arrays: fallenBlocks and linesRemoved
